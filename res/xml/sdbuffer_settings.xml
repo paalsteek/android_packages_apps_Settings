@@ -13,24 +13,20 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-
+<!-- Engle, 添加SD卡缓存设置 -->
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/anonymous_statistics_title"
+    android:title="@string/sd_buffers_title"
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
-    <!-- Engle, Default disable the report -->
+    <ListPreference
+        android:key="pref_sd_buffer"
+        android:dialogTitle="@string/sd_read_buffer_title"
+        android:title="@string/sd_read_buffer_title" />
+
     <CheckBoxPreference
-        android:key="pref_anonymous_opt_in"
-        android:defaultValue="false"
-        android:title="@string/enable_reporting_title" />
-
-    <PreferenceScreen
-        android:title="@string/preview_data_title"
-        android:fragment="com.android.settings.cmstats.PreviewData" />
-
-    <Preference
-        android:key="pref_view_stats"
-        android:title="@string/view_stats_title" />
+        android:key="pref_sd_buffer_set_on_boot"
+        android:title="@string/sd_read_buffer_set_on_boot"
+        android:summary="@string/sd_read_buffer_set_on_boot_summary"/>
 
 </PreferenceScreen>

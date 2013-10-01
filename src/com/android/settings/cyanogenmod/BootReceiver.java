@@ -37,6 +37,11 @@ public class BootReceiver extends BroadcastReceiver {
 
     private static final String CPU_SETTINGS_PROP = "sys.cpufreq.restored";
     private static final String IOSCHED_SETTINGS_PROP = "sys.iosched.restored";
+    // Engle, 添加SD Card读写缓存
+    private static final String SD_BUFFER_SETTINGS_PROP = "sys.sdbuffer.restored";
+    // Engle, 添加 GUP 性能设置
+    private static final String GPU_MAX_FREQ_SETTINGS_PROP = "sys.gpumaxfreq.restored";
+
     private static final String KSM_SETTINGS_PROP = "sys.ksm.restored";
 
     @Override
@@ -72,6 +77,24 @@ public class BootReceiver extends BroadcastReceiver {
         DisplayGamma.restore(ctx);
         VibratorIntensity.restore(ctx);
         DisplaySettings.restore(ctx);
+
+        // Engle, 添加SD Card读写缓存
+        if (SystemProperties.getBoolean(SD_BUFFER_SETTINGS_PROP, false) == false
+                && intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
+            SystemProperties.set(SD_BUFFER_SETTINGS_PROP, "true");
+            configureSDBuffer(ctx);
+        } else {
+            SystemProperties.set(SD_BUFFER_SETTINGS_PROP, "false");
+        }
+
+        // Engle, 添加 GUP 性能设置
+        if (SystemProperties.getBoolean(GPU_MAX_FREQ_SETTINGS_PROP, false) == false
+                && intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
+            SystemProperties.set(GPU_MAX_FREQ_SETTINGS_PROP, "true");
+            configureGPUMaxFreq(ctx);
+        } else {
+            SystemProperties.set(GPU_MAX_FREQ_SETTINGS_PROP, "false");
+        }
     }
 
     private void initFreqCapFiles(Context ctx)
@@ -146,6 +169,58 @@ public class BootReceiver extends BroadcastReceiver {
                 Utils.fileWriteOneLine(IOScheduler.IOSCHED_LIST_FILE, ioscheduler);
             }
             Log.d(TAG, "I/O scheduler settings restored.");
+        }
+    }
+
+    // Engle, 添加SD Card读写缓存
+    private void configureSDBuffer(Context ctx) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+
+        if (prefs.getBoolean(SDBuffer.SOB_PREF, false) == false) {
+            Log.i(TAG, "Restore disabled by user preference.");
+            return;
+        }
+
+        String sdbuffer = prefs.getString(SDBuffer.SDBUFFER_PREF, null);
+        String availableSDBufferLine = Utils.fileReadOneLine(SDBuffer.SDBUFFER_FILE);
+        boolean noSettings = ((availableSDBufferLine == null) || (sdbuffer == null));
+
+        if (noSettings) {
+            Log.d(TAG, "No SD buffer settings saved. Nothing to restore.");
+        } else {
+            if (sdbuffer.compareToIgnoreCase(availableSDBufferLine) != 0) {
+                Utils.fileWriteOneLine(SDBuffer.SDBUFFER_FILE, sdbuffer);
+            }
+            Log.d(TAG, "SD buffer settings restored.");
+        }
+    }
+
+    // Engle, 添加 GPU 性能设置
+    private void configureGPUMaxFreq(Context ctx) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+
+        if (prefs.getBoolean(GPUSetting.SOB_PREF, false) == false) {
+            Log.i(TAG, "Restore disabled by user preference.");
+            return;
+        }
+
+        String gpu_max_freq = prefs.getString(GPUSetting.GPU_MAX_FREQ_PREF, null);
+        String curGPUMaxFreq = Utils.fileReadOneLine(GPUSetting.GPU_MAX_FREQ_FILE);
+        Log.d(TAG, "gpu_max_freq: " + gpu_max_freq + " curGPUMaxFreq: " + curGPUMaxFreq);
+        boolean noSettings = ((curGPUMaxFreq == null) || (gpu_max_freq == null));
+
+        if (noSettings) {
+            Log.d(TAG, "No GPU maximum frequence settings saved. Nothing to restore.");
+        } else {
+            if (gpu_max_freq.compareToIgnoreCase(curGPUMaxFreq) != 0) {
+                Utils.fileWriteOneLine(GPUSetting.GPU_MAX_FREQ_FILE, gpu_max_freq);
+                curGPUMaxFreq = Utils.fileReadOneLine(GPUSetting.GPU_MAX_FREQ_FILE);
+                Log.d(TAG, "GPU maximum frequence settings restored to " + curGPUMaxFreq);
+            }
+            if (gpu_max_freq.compareToIgnoreCase(curGPUMaxFreq)  == 0)
+                Log.d(TAG, "GPU maximum frequence settings restore successed.");
+            else
+                Log.d(TAG, "GPU maximum frequence settings restore failed.");
         }
     }
 

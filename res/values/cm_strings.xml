@@ -999,4 +999,28 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="selinux_enable_title">Security Enhanced Android</string>
     <string name="selinux_enable_warning">You are about to enable SEAndroid, an advanced security mechanism, on your device.\n\nThis option exists for debugging purposes only, and it is very likely that your device isn\'t fully ready for it, which may cause parts (or all) of your hardware to block or hang.\n\nAre you sure you want to proceed?</string>
 
+    <!-- Engle, 添加SD卡缓存设置 -->
+    <!-- Performance Settings : SD read buffer settings title -->
+    <string name="sd_buffers_title">SD buffer</string>
+    <!-- Performance Settings : SD read buffer settings summary. -->
+    <string name="sd_buffers_summary">Change SD read buffer</string>
+
+    <!-- Performance Settings : SD read buffer settings sub items -->
+    <string name="sd_read_buffer_title">SD buffer (KB)</string>
+    <string name="sd_read_buffer_summary" translatable="false">%S</string>
+    <string name="sd_read_buffer_set_on_boot">Set on boot</string>
+    <string name="sd_read_buffer_set_on_boot_summary">Restore the SD read buffer settings on boot</string>
+    <string name="sd_buffer_size_default">2048 (Default)</string>
+    <!-- Engle, 添加相机键唤醒 -->
+    <string name="hardware_keys_focus_keys_title">Camera Button</string>
+    <string name="pref_focus_wake_title">Camera rocker wake</string>
+    <string name="pref_focus_wake_summary">Pressing the camera rocker will wake the device</string>
+
+    <!-- Engle, 添加 GPU 性能设置 -->
+    <string name="gpu_setting_title">GPU Performance</string>
+    <string name="gpu_setting_summary">Set the GPU aximum frequence</string>
+    <string name="gpu_max_freq_title">GPU Max Frequence (MHz)</string>
+    <string name="gpu_max_freq_summary" translatable="false">%S</string>
+    <string name="gpu_max_freq_set_on_boot">Set on boot</string>
+    <string name="gpu_max_freq_set_on_boot_summary">Restore the SD read buffer settings on boot</string>
 </resources>

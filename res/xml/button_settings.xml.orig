@@ -163,15 +163,4 @@
             android:summary="@string/swap_volume_buttons_summary" />
     </PreferenceCategory>
 
-    <!-- Engle, 添加相机键唤醒 -->
-    <PreferenceCategory
-        android:key="focus_keys"
-        android:title="@string/hardware_keys_focus_keys_title" >
-            <CheckBoxPreference
-                android:key="pref_focus_wake"
-                android:title="@string/pref_focus_wake_title"
-                android:summary="@string/pref_focus_wake_summary"
-                android:defaultValue="false" />
-
-    </PreferenceCategory>
 </PreferenceScreen>

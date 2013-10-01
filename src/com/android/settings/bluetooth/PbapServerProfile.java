@@ -35,6 +35,7 @@ import java.util.List;
 final class PbapServerProfile implements LocalBluetoothProfile {
     private static final String TAG = "PbapServerProfile";
     private static boolean V = true;
+    private Context mContext;
 
     private BluetoothPbap mService;
     private boolean mIsProfileReady;
@@ -48,9 +49,12 @@ final class PbapServerProfile implements LocalBluetoothProfile {
     private final class PbapServiceListener
             implements BluetoothPbap.ServiceListener {
 
-        public void onServiceConnected(BluetoothPbap proxy) {
+        public PbapServiceListener() {
+            mService = new BluetoothPbap(mContext, this);
+        }
+
+        public void onServiceConnected() {
             if (V) Log.d(TAG,"Bluetooth service connected");
-            mService = (BluetoothPbap) proxy;
             mIsProfileReady=true;
         }
 
@@ -65,6 +69,7 @@ final class PbapServerProfile implements LocalBluetoothProfile {
     }
 
     PbapServerProfile(Context context) {
+        mContext = context;
         BluetoothPbap pbap = new BluetoothPbap(context, new PbapServiceListener());
     }
 

@@ -31,6 +31,20 @@
         android:title="@string/io_scheds_title"
         android:summary="@string/io_scheds_summary" />
 
+    <!-- Engle, 添加GPU性能设置 -->
+    <PreferenceScreen
+        android:key="gpusetting"
+        android:fragment="com.android.settings.cyanogenmod.GPUSetting"
+        android:title="@string/gpu_setting_title"
+        android:summary="@string/gpu_setting_summary" />
+
+    <!-- Engle, 添加SD卡缓存设置 -->
+    <PreferenceScreen
+        android:key="sdbuffer"
+        android:fragment="com.android.settings.cyanogenmod.SDBuffer"
+        android:title="@string/sd_buffers_title"
+        android:summary="@string/sd_buffers_summary" />
+
     <PreferenceScreen
         android:key="memory_management"
         android:fragment="com.android.settings.cyanogenmod.MemoryManagement"

@@ -80,9 +80,6 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mShowActionOverflow;
     private CheckBoxPreference mSwapVolumeButtons;
 
-    // Engle, 添加相机键唤醒
-    private CheckBoxPreference mFocusWake;
-    private static final String KEY_FOCUS_WAKE = "pref_focus_wake";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,12 +108,6 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_APPSWITCH);
         final PreferenceCategory volumeCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_VOLUME);
-        // Engle, 添加相机键唤醒
-        mFocusWake = (CheckBoxPreference) findPreference(KEY_FOCUS_WAKE);
-        if (mFocusWake != null) {
-            mFocusWake.setChecked(Settings.System.getInt(resolver,
-                    Settings.System.FOCUS_WAKE_SCREEN, 0) == 1);
-        }
 
         if (hasHomeKey) {
             if (!res.getBoolean(R.bool.config_show_homeWake)) {
@@ -276,10 +267,6 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         } else if (preference == mAppSwitchLongPressAction) {
             handleActionListChange(mAppSwitchLongPressAction, newValue,
                     Settings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION);
-            return true;
-        } else if (preference == mFocusWake) {// Engle, 添加相机键唤醒
-            Settings.System.putInt(getContentResolver(), Settings.System.FOCUS_WAKE_SCREEN,
-                    mFocusWake.isChecked() ? 1 : 0);
             return true;
         }
 

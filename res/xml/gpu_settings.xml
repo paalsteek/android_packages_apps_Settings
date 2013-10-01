@@ -13,24 +13,24 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-
+<!-- Engle, 添加 GPU 性能设置 -->
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/anonymous_statistics_title"
+    android:title="@string/gpu_setting_title"
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
-    <!-- Engle, Default disable the report -->
+    <ListPreference
+        android:key="pref_gpu_max_freq"
+        android:dialogTitle="@string/gpu_max_freq_title"
+        android:title="@string/gpu_max_freq_title"
+        android:entries = "@array/gpu_max_freq_entries" 
+        android:entryValues = "@array/gpu_max_freq_values"
+        android:defaultValue="200000000"/>
+
     <CheckBoxPreference
-        android:key="pref_anonymous_opt_in"
-        android:defaultValue="false"
-        android:title="@string/enable_reporting_title" />
-
-    <PreferenceScreen
-        android:title="@string/preview_data_title"
-        android:fragment="com.android.settings.cmstats.PreviewData" />
-
-    <Preference
-        android:key="pref_view_stats"
-        android:title="@string/view_stats_title" />
+        android:key="pref_gpu_max_freq_set_on_boot"
+        android:title="@string/gpu_max_freq_set_on_boot"
+        android:summary="@string/gpu_max_freq_set_on_boot_summary"
+        android:defaultValue="false"/>
 
 </PreferenceScreen>
