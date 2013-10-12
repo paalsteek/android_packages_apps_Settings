@@ -648,7 +648,6 @@
         <item>66 MHz</item>
         <item>33 MHz</item>
     </string-array>
-</resources>
 
     <!-- Gamma calibration descriptors, deliberately empty as string values populated via
          per-device overlay. Required to build on non-hardware tunable devices -->
